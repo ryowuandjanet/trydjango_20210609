@@ -9,7 +9,7 @@ def post_list(request):
   queryset_list=Post.objects.all().order_by("-timestamp")
   paginator = Paginator(queryset_list, 3) # Show 25 contacts per page
   page_request_var="pagecode"
-  page = request.GET.get('page')
+  page = request.GET.get(page_request_var)
   queryset = paginator.get_page(page)
   context={
    "title":"List",

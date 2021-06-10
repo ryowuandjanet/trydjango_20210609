@@ -5,43 +5,45 @@
 {% endblock head_title %}
 
 {% block content %}
-  <h1>{{ title }}</h1>
-  {% for obj in object_list %}
-    <div class="card" style="width: 18rem;">
-      {% if obj.image %}
-        <img src="{{ obj.image.url }}" class="card-img-top" alt="">
-      {% endif %}
-      <div class="card-body">
-        <h5 class="card-title">
-          <a href="{% url 'posts:detail' obj.id %}">
-            {{ obj.title }}
-          </a>
-        </h5>
-        <h6 class="card-subtitle mb-2 text-muted">{{ obj.timestamp|timesince }}</h6>
-        <p class="card-text">
-          {{ obj.content|linebreaks|truncatechars:120 }}
-        </p>
-        <a href="{{ obj.get_absolute_url }}" class="card-link btn btn-primary">View</a>
-      </div>
-    </div>
-  {% endfor %}
-  <div class="pagination">
-    <span class="step-links">
-      {% if object_list.has_previous %}
-        <a href="?{{ page_request_var }}=1">&laquo; first</a>
-        <a href="?{{ page_request_var }}={{ object_list.previous_page_number }}">previous</a>
-      {% endif %}
-
-      <span class="current">
-        Page {{ object_list.number }} of {{ object_list.paginator.num_pages }}.
-      </span>
-
-      {% if object_list.has_next %}
-        <a href="?{{ page_request_var }}={{ object_list.next_page_number }}">next</a>
-        <a href="?{{ page_request_var }}={{ object_list.paginator.num_pages }}">last &raquo;</a>
-      {% endif %}
-    </span>
-  </div>
+  <!-- 主表部份 -->
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>圖片</th>
+        <th>姓名</th>
+        <th>內容</th>
+        <th>時間</th>
+        <th>選項 <a href="{% url 'posts:create' %}" class="btn btn-secondary btn-sm">新增</a></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in object_list %}
+        <tr>
+          <td>{{ obj.id }}</td>
+          <td>
+            {% if obj.image %}
+              <img src="{{ obj.image.url }}" width="200" class="img-responsive" ></img>
+            {% endif %}
+          </td>
+          <td>{{ obj.title }}</td>
+          <td>{{ obj.content }}</td>
+          <td>
+            建立：{{ obj.timestamp }}<br>
+            更新：{{ obj.updated }}
+          </td>
+          <td>
+            <a href="{% url 'posts:detail' obj.id %}" class="btn btn-primary btn-sm">查看</a>
+            <a href="{% url 'posts:update' obj.id %}" class="btn btn-success btn-sm">更新</a>
+            <a href="{% url 'posts:delete' obj.id %}" class="btn btn-danger btn-sm">刪除</a>
+          </td>
+        </tr>
+        
+      {% endfor%}
+    </tbody>
+  </table>
+  <!-- pagination部份 -->
+  {% include "pagination.html" %}
 {% endblock content %}
 
 
