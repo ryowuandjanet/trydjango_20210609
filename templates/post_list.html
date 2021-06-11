@@ -31,11 +31,14 @@
           <td>
             建立：{{ obj.timestamp }}<br>
             更新：{{ obj.updated }}
+            {% if obj.user.get_full_name %}
+              <p>Author: {{ obj.user.get_full_name }}</p>
+            {% endif %}
           </td>
           <td>
-            <a href="{% url 'posts:detail' obj.id %}" class="btn btn-primary btn-sm">查看</a>
-            <a href="{% url 'posts:update' obj.id %}" class="btn btn-success btn-sm">更新</a>
-            <a href="{% url 'posts:delete' obj.id %}" class="btn btn-danger btn-sm">刪除</a>
+            <a href="{% url 'posts:detail' slug=obj.slug %}" class="btn btn-primary btn-sm">查看</a>
+            <a href="{% url 'posts:update' slug=obj.slug %}" class="btn btn-success btn-sm">更新</a>
+            <a href="{% url 'posts:delete' slug=obj.slug %}" class="btn btn-danger btn-sm">刪除</a>
           </td>
         </tr>
         

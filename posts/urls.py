@@ -5,8 +5,8 @@ app_name="posts"
 
 urlpatterns = [
   path('', post_list,name="list"),
-  path('<int:id>/', post_detail,name="detail"),
-  path('create/', post_create,name="create"),
-  path('<int:id>/edit/', post_update,name="update"),
-  path('<int:id>/delete/', post_delete,name="delete"),
+  path('<str:slug>/', post_detail,name="detail"),
+  path('create', post_create,name="create"),
+  path('<str:slug>/edit/', post_update,name="update"),
+  path('<str:slug>/delete/', post_delete,name="delete"),
 ]
