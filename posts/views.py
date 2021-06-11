@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse,HttpResponseRedirect,Http404
 from posts.models import Post
-from posts.forms import PostForm
+from posts.forms import *
 from django.core.paginator import Paginator
 from django.utils.http import quote_plus
 
@@ -14,8 +14,7 @@ def post_list(request):
   queryset = paginator.get_page(page)
   context={
    "title":"List",
-   "object_list":queryset,
-   "page_request_var" : page_request_var
+   "object_list":queryset, "page_request_var" : page_request_var
   }
   return render(request,"post_list.html",context)
 
@@ -72,4 +71,18 @@ def post_delete(request,slug=None):
   context = {"instance": instance}
   return render(request, "post_delete.html", context)
 
-
+def land_create(request,id=None):
+  instance = get_object_or_404(Post,id=id)
+  if not request.user.is_staff or not request.user.is_superuser:
+    raise Http404
+  form = LandForm(request.POST or None)
+  if form.is_valid():
+    instance=form.save(commit=False)
+    instance.save()
+    messages.success(request,"successfully Created")
+    return redirect("posts:list")
+  context = {
+    "form" : form, 
+    "instance": instance,
+  }
+  return render(request, "land_form.html",context)

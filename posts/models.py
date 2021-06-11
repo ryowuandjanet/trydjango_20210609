@@ -32,6 +32,13 @@ class Post(models.Model):
   def get_absolute_url(self):
     return reverse("posts:detail", kwargs={"slug" : self.slug})
 
+class Land(models.Model):
+  post=models.ForeignKey(Post,related_name='lands',on_delete=models.CASCADE)
+  landNumber=models.CharField(u'地號',max_length=100,null=True,blank=True)
+
+  def __str__(self):
+    return self.landNumber
+    
 def create_slug(instance,new_slug=None):
   slug=slugify(instance.title)
   if new_slug is not None:

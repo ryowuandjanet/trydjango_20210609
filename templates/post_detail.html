@@ -35,8 +35,10 @@
     </a>
 
     {{ instance.content |linebreaks }}<br/>
+    <div class="fb-comments" data-href="https://developers.facebook.com/docs/plugins/comments#configurator" data-numposts="5"></div>
   </div>
 
 <a href="{% url 'posts:list' %}">返回首頁</a>
+<a href="{% url 'posts:landcreate' id=instance.id %}">土地</a>
 
 {% endblock content %}

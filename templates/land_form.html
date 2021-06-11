@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block head_title %}
+  Land Create
+{% endblock head_title %}
+
+{% block content %}
+<div class="col">
+  <h1>Form</h1>
+  <form method="POST" action="" enctype='multipart/form-data'>{% csrf_token %}
+    
+    {{ form.as_p }}
+    <input type="submit" class="btn btn-secondary" value="Submit Post" onclick="get_land_yfcase()">
+  </form>
+</div>
+
+<script>
+  function get_land_yfcase() {
+    var url = (window.location.pathname).replace("/posts/land/create/","").replace("/",""); 
+    document.getElementById("id_post").value = url;
+    // alert(window.location)
+    // alert(url)
+  }
+</script>
+{% endblock content %}

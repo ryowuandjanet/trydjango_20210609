@@ -7,6 +7,7 @@ urlpatterns = [
   path('', post_list,name="list"),
   path('<str:slug>/', post_detail,name="detail"),
   path('create', post_create,name="create"),
+  path('land/create/<int:id>/', land_create,name="landcreate"),
   path('<str:slug>/edit/', post_update,name="update"),
   path('<str:slug>/delete/', post_delete,name="delete"),
 ]

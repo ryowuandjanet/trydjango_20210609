@@ -1,5 +1,5 @@
 from django import forms
-from posts.models import Post
+from posts.models import *
 
 class PostForm(forms.ModelForm):
   class Meta:
@@ -9,3 +9,11 @@ class PostForm(forms.ModelForm):
       "content",
       "image"
     ]
+
+class LandForm(forms.ModelForm):
+  post = forms.ModelChoiceField(Post.objects.all(), widget=forms.HiddenInput())
+  class Meta:
+    model=Land
+    fields ='__all__'
+
+  
